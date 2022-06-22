@@ -6,13 +6,14 @@ import (
 	"strconv"
 )
 
-type Crud interface {}
+type Crud interface{}
 type Todo struct {
-	ID   int
-	Task string
+	ID   int    `json:"id"`
+	Task string `json:"task"`
 }
 
 var todos []Todo
+
 func Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.Header().Add("Access-Control-Allow-Origin", "*")
@@ -38,7 +39,6 @@ func Read(w http.ResponseWriter, r *http.Request) {
 		if len(todos) != 0 {
 			json.NewEncoder(w).Encode(todos)
 		}
-		w.Write([]byte(`{"error": "Todo empty"}`))
 	} else {
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(`{"error": "Method not available"}`))
